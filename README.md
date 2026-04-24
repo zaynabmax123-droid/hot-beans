@@ -1,2 +1,568 @@
-# hot-beans
-a website about website developers
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hot Beans Web Careers</title>
+  <style>
+    * {
+      box-sizing: content-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Verdana, sans-serif;
+      background-color: #eef2f7;
+      color: #1f2937;
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: #ffffff;
+      border-bottom: 3px solid #2563eb;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .topbar {
+      max-width: 1150px;
+      margin: auto;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .brand {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    nav button {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: 0.3s;
+    }
+
+    nav button:hover,
+    nav button.active {
+      background-color: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    .wrapper {
+      max-width: 1150px;
+      margin: auto;
+      padding: 25px 20px 50px;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(8px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .banner {
+      background: linear-gradient(135deg, #2563eb, #0f172a);
+      color: white;
+      border-radius: 18px;
+      padding: 60px 35px;
+      margin-bottom: 30px;
+    }
+
+    .banner h1 {
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+    }
+
+    .banner p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin-bottom: 20px;
+    }
+
+    .banner-links a {
+      display: inline-block;
+      text-decoration: none;
+      padding: 12px 20px;
+      margin-right: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .primary-btn {
+      background-color: #f59e0b;
+      color: #111827;
+    }
+
+    .secondary-btn {
+      background-color: rgba(255,255,255,0.15);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.35);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #111827;
+    }
+
+    .intro-text {
+      margin-bottom: 25px;
+      max-width: 850px;
+    }
+
+    .grid {
+      display: grid;
+      gap: 22px;
+      margin-bottom: 30px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .panel {
+      background-color: white;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      border-top: 5px solid #2563eb;
+    }
+
+    .panel h3 {
+      margin-bottom: 12px;
+      color: #111827;
+    }
+
+    .panel p {
+      margin-bottom: 10px;
+    }
+
+    .panel ul {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .panel li {
+      margin-bottom: 10px;
+    }
+
+    .developer-box {
+      background-color: white;
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      border-left: 6px solid #f59e0b;
+    }
+
+    .developer-box h3 {
+      margin-bottom: 8px;
+    }
+
+    .role-tag {
+      display: inline-block;
+      background-color: #dbeafe;
+      color: #1d4ed8;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+
+    .spec-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .spec-item {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 14px rgba(0,0,0,0.07);
+    }
+
+    form {
+      background: white;
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      max-width: 800px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 18px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      padding: 13px 22px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #1d4ed8;
+    }
+
+    .resource {
+      background-color: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 5px 14px rgba(0,0,0,0.07);
+      border-right: 6px solid #2563eb;
+    }
+
+    .resource a {
+      color: #1d4ed8;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 1.05rem;
+    }
+
+    .resource a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      background-color: #111827;
+      color: white;
+      text-align: center;
+      padding: 22px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .banner {
+        padding: 40px 22px;
+      }
+
+      .banner h1 {
+        font-size: 2rem;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="topbar">
+      <div class="brand">Hot Beans Web</div>
+      <nav>
+        <button class="active" onclick="openPage('home', this)">Home</button>
+        <button onclick="openPage('company', this)">About us</button>
+        <button onclick="openPage('team', this)">Developers</button>
+        <button onclick="openPage('form', this)">Apply</button>
+        <button onclick="openPage('learning', this)">Courses</button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrapper">
+
+    <section id="home" class="page active">
+      <div class="banner">
+        <h1>Build your future in web development</h1>
+        <body>
+
+
+<body>
+ <video controls="" height="240" width="320">
+ <source src="https://media.geeksforgeeks.org/wp-content/uploads/20190616234019/Canvas.move_.mp4" type="video/mp4"/>
+   website starter
+        </video>
+</body>
+
+</body>
+        <p>
+          Welcome to Hot Beans Web. We are recruiting new junior web developers who have completed
+          training or qualifications in web development and are now ready to enter the industry.
+          This website introduces our company, our team, our job expectations, our application form
+          and useful learning resources.
+        </p>
+        <div class="banner-links">
+          <a href="#" class="primary-btn" onclick="goToSection('form')">Apply Today</a>
+          <a href="#" class="secondary-btn" onclick="goToSection('team')">View Developers</a>
+        </div>
+      </div>
+
+      <h2 class="section-title">What you can find on this website</h2>
+      <div class="grid grid-3">
+        <div class="panel">
+          <h3>Company information</h3>
+          <p>
+            Read about Hot Beans Web, what we do and the aims of the business.
+          </p>
+        </div>
+        <div class="panel">
+          <h3>Employee profiles</h3>
+          <p>
+            See examples of current trainee and junior web developers working at the company.
+          </p>
+        </div>
+        <div class="panel">
+          <h3>Application details</h3>
+          <p>
+            Check the job requirements, qualifications and complete the online application form.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="company" class="page">
+      <h2 class="section-title">Company Profile</h2>
+      <p class="intro-text">
+        Hot Beans Web is a professional web development company that creates websites for a range of clients.
+        We focus on producing websites that are modern, responsive, easy to use and suitable for different devices.
+        We also believe in supporting new talent and helping junior developers gain experience in a real working environment.
+      </p>
+
+      <div class="grid grid-2">
+        <div class="panel">
+          <h3>What we do</h3>
+          <ul>
+            <li>Design modern websites for businesses and organisations</li>
+            <li>Develop responsive pages for desktop, tablet and mobile devices</li>
+            <li>Improve usability, layout and appearance of websites</li>
+            <li>Test websites for functionality and compatibility</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <h3>Our aims</h3>
+          <ul>
+            <li>To recruit motivated junior web developers</li>
+            <li>To produce high-quality websites for clients</li>
+            <li>To support learners entering the web industry</li>
+            <li>To create websites that are fit for purpose and user-friendly</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="team" class="page">
+      <h2 class="section-title">Profiles of Existing Developers</h2>
+      <p class="intro-text">
+        These examples show the types of junior staff working at Hot Beans Web and the roles they carry out.
+      </p>
+
+      <div class="grid grid-3">
+        <div class="developer-box">
+          <span class="role-tag">Front-End Developer</span>
+          <img src="https://t3.ftcdn.net/jpg/02/79/78/48/360_F_279784836_4eKMjfIfDtaICKmaSBAyft2Y43u5V76Q.jpg" alt="proffessional man" style="width:300px;height:250px;">
+          <h3>Daniel Morris</h3>
+          <p>
+            Daniel creates page layouts using HTML and CSS and makes sure websites are responsive across different screen sizes.
+          </p>
+          <p><strong>Skills:</strong> HTML, CSS, accessibility, layout design</p>
+        </div>
+
+        <div class="developer-box">
+          <span class="role-tag">Web Designer</span>
+          <img src="https://images.squarespace-cdn.com/content/5dd366b5ac1101724ff2fac7/1574238323011-P1QY1CS0ZTCLEG9TMGTO/woman+3.jpeg?content-type=image%2Fjpeg" alt="proffessional women" style="width:300px;height:250px;">
+          <h3>Monal Isa</h3>
+          <p>
+            Monal works on page appearance, colour schemes and visual planning to make websites attractive and clear for users.
+          </p>
+          <p><strong>Skills:</strong> design planning, user interface, colour and typography</p>
+        </div>
+
+        <div class="developer-box">
+          <span class="role-tag">Junior Developer</span>
+          <img src="https://images.ctfassets.net/ibqmfcvkfft1/54tjm0b1fGlhU6FPnlIvvc/2d17605d489516e763a5c192a7bcbca8/Marcus_Roach.png" alt="proffessional man" style="width:300px;height:250px;">
+          <h3>Marcus Roach</h3>
+          <p>
+            Marcus supports the development team by adding website features, testing pages and checking links and forms work correctly.
+          </p>
+          <p><strong>Skills:</strong> JavaScript basics, testing, problem solving, teamwork</p>
+        </div>
+      </div>
+    </section>
+
+  
+    <section id="form" class="page">
+      <h2 class="section-title">Online Application Form</h2>
+      <p class="intro-text">
+        Complete the form below to apply for a junior web developer role at Hot Beans Web.
+      </p>
+
+      <form>
+        <div class="form-row">
+          <div>
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" placeholder="Enter your full name">
+          </div>
+
+          <div>
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email address">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="Enter your phone number">
+          </div>
+
+          <div>
+            <label for="qualification">Qualification</label>
+            <select id="qualification">
+              <option>Select a qualification</option>
+              <option>BTEC IT</option>
+              <option>A Level IT</option>
+              <option>Diploma in Web Development</option>
+              <option>Other Related Qualification</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="experience">Skills and Experience</label>
+        <textarea id="experience" placeholder="Write about your web development skills, qualifications and any experience"></textarea>
+
+        <label for="portfolio">Portfolio or Website Link</label>
+        <input type="url" id="portfolio" placeholder="Paste a link if you have one">
+
+        <button type="submit" class="submit-btn">Send Application</button>
+      </form>
+    </section>
+
+    <section id="learning" class="page">
+      <h2 class="section-title">Useful Web Development Courses</h2>
+      <p class="intro-text">
+        These links can help new developers improve their knowledge and prepare for work in the web industry.
+      </p>
+
+      <div class="resource">
+        <a href="https://www.w3schools.com/" target="_blank">W3Schools</a>
+        <p>Simple tutorials for HTML, CSS, JavaScript and other web development topics.</p>
+      </div>
+
+      <div class="resource">
+        <a href="https://www.freecodecamp.org/" target="_blank">freeCodeCamp</a>
+        <p>Free lessons, coding practice and projects to build practical skills.</p>
+      </div>
+
+      <div class="resource">
+        <a href="https://developer.mozilla.org/" target="_blank">MDN Web Docs</a>
+        <p>Detailed web documentation and guidance for modern web technologies.</p>
+      </div>
+
+      <div class="resource">
+        <a href="https://www.codecademy.com/" target="_blank">Codecademy</a>
+        <p>Interactive learning for beginners who want to practise web development.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Hot Beans Web Careers. Designed for junior web developer recruitment.</p>
+  </footer>
+
+  <script>
+    function openPage(pageId, btn) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
+
+      const buttons = document.querySelectorAll('nav button');
+      buttons.forEach(button => button.classList.remove('active'));
+
+      document.getElementById(pageId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function goToSection(pageId) {
+      const pages = document.querySelectorAll('.page');
+      pages.forEach(page => page.classList.remove('active'));
+
+      document.getElementById(pageId).classList.add('active');
+
+      const buttons = document.querySelectorAll('nav button');
+      buttons.forEach(button => button.classList.remove('active'));
+
+      const buttonMap = {
+        home: 0,
+        company: 1,
+        team: 2,
+        jobs: 3,
+        form: 4,
+        learning: 5
+      };
+
+      buttons[buttonMap[pageId]].classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
